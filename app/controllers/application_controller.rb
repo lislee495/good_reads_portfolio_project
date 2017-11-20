@@ -15,8 +15,22 @@ class ApplicationController < Sinatra::Base
     erb :sign_up
   end
 
+  post "/signup" do
+
+  end
+
   get "log_in" do
     erb :log_in
   end
+
+  helpers do
+		def logged_in?
+			!!session[:user_id]
+		end
+
+		def current_user
+			User.find(session[:user_id])
+		end
+	end
 
 end
