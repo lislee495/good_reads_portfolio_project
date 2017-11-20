@@ -6,5 +6,4 @@ class User < ActiveRecord::Base
 
   include Slug::InstanceMethods
   extend Slug::ClassMethods
-
 end
