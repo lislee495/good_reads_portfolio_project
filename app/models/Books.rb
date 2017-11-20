@@ -1,9 +1,7 @@
 class Book < ActiveRecord::Base
   belongs_to :users
-  belongs_to :authors
-  has_many :genres, through: :bookgenres
-  has_many :bookgenres
-
+  belongs_to :author
+  belongs_to :genre
   include Slug::InstanceMethods
   extend Slug::ClassMethods
 end
