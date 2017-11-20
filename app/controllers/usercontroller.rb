@@ -17,4 +17,17 @@ class UserController  < ApplicationController
     end
   end
 
+  post "/my_books" do
+    if !params[:users][:books].include?("")
+      book = Book.find_or_create_by(params[:users][:books])
+      # not sure if this functionality works ^
+      book.save
+      current_user.books << book
+      redirect to "/users/#{current_user.slug}"
+    else
+      # flash message "Need to fill all fields"
+      flash[:message] = "Need to fill all fields."
+    end
+  end
+
 end

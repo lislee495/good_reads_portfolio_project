@@ -1,4 +1,7 @@
-<h1>Add books to My Books</h1>
+<% if flash.has?(:message) %>
+  <%= flash[:message] %>
+<%end%>
+<h1>Add a book to My Books</h1>
 
 <form action="/my_books" method="post">
   <label>Book Name:</label><input type="text" name="user[books][][name]" >
