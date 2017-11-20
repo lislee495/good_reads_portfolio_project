@@ -1,0 +1,9 @@
+<h1>Add books to My Books</h1>
+
+<form action="/my_books" method="post">
+  <label>Book Name:</label><input type="text" name="user[books][][name]" >
+  <label>Book Author:</label><input type="text" name="user[books][][author]">
+  <label>Book Genre:</label><input type="text" name="user[books][][genre]">
+  <input type="submit" name="submit" value="Submit">
+</form>
+<!-- enables creation of multiple books per user  -->
