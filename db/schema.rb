@@ -16,15 +16,9 @@ ActiveRecord::Schema.define(version: 20171128022747) do
     t.string "name"
   end
 
-  create_table "book_genres", force: :cascade do |t|
-    t.integer "book_id"
-    t.integer "genre_id"
-  end
-
   create_table "books", force: :cascade do |t|
     t.string "name"
     t.integer "author_id"
-    t.integer "user_id"
     t.integer "genre_id"
   end
 
