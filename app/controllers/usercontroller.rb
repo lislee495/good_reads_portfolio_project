@@ -1,13 +1,18 @@
 class UserController  < ApplicationController
 
   get "/users/:slug" do
-    # can view but not edit a user profile
+    # anyone can view but not edit a user profile
     @user = User.find_by_slug(params[:slug])
-    erb :"/users/user_profile.erb"
+    erb :"/users/user_profile"
   end
 
-  get "users/:slug/add" do
-    # only current user can edit their own page
+  post "/users/:slug/add" do
+    user = User.find_by_slug(params[:slug])
+    redirect to "/users/#{user.slug}/add"
+  end
+
+  get "/users/:slug/add" do
+    # only current user can add or edit their own page
     user = User.find_by_slug(params[:slug])
     if logged_in? && (user == current_user)
       @user = user
@@ -18,16 +23,33 @@ class UserController  < ApplicationController
   end
 
   post "/my_books" do
-    if !params[:users][:books].include?("")
-      book = Book.find_or_create_by(params[:users][:books])
-      # not sure if this functionality works ^
+
+      author = Author.find_or_create_by(name: params[:books][][:author])
+      book = Book.find_or_create_by(name: params[:books][:name], author: author.id)
       book.save
       current_user.books << book
       redirect to "/users/#{current_user.slug}"
-    else
-      # flash message "Need to fill all fields"
-      flash[:message] = "Need to fill all fields."
-    end
   end
 
+  get "/users/:slug/edit" do
+    @user = User.find_by_slug(params[:slug])
+    erb :"/users/user_edit"
+  end
+
+  post "/:book_id/show" do
+    @book = Book.find_by_id(params[:book_id])
+    redirect to "/books/#{@book.slug}"
+  end
+
+  post "/:book_id/edit" do
+    @book = Book.find_by_id(params[:book_id])
+    redirect to "/books/#{@book.slug}/edit"
+  end
+
+  post "/users/:slug/:book_id/delete" do
+    @user = User.find_by_slug(params[:slug])
+    book = @user.books.find_by(id: params[:book_id])
+    book.delete
+    redirect to "/users/#{@user.slug}/my_books"
+  end
 end

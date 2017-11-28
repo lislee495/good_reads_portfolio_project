@@ -9,4 +9,4 @@ use Rack::MethodOverride
 run ApplicationController
 use UserController
 use BookController
-use Rack::Flash
+use OtherController

@@ -1,6 +1,6 @@
 require './config/environment'
 class ApplicationController < Sinatra::Base
-  use Rack::Flash
+
   configure do
     set :public_folder, 'public'
     set :views, 'app/views'
@@ -10,6 +10,10 @@ class ApplicationController < Sinatra::Base
 
   get "/" do
     erb :homepage
+  end
+
+  get "/failure" do
+    erb :failure
   end
 
   get "/signup" do
@@ -28,7 +32,7 @@ class ApplicationController < Sinatra::Base
 
   get "/login" do
     if logged_in?
-      redirect to "/users/#{user.slug}"
+      redirect to "/users/#{current_user.slug}"
     else
       erb :log_in
     end

@@ -1,7 +1,15 @@
 class Book < ActiveRecord::Base
-  belongs_to :users
+  has_many :books_users
+  has_many :users, through: :books_users
   belongs_to :author
   belongs_to :genre
-  include Slug::InstanceMethods
-  extend Slug::ClassMethods
+
+  def slug
+    slug = self.name.downcase!
+    slug
+  end
+
+  def self.find_by_slug(slug)
+    self.all.detect{ |object| object.slug == slug }
+  end
 end

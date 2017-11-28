@@ -1,0 +1,14 @@
+<h1>Edit <%=@book.name%></h1>
+
+<form action="/books/<%=@book.slug%>/edit" method="post">
+  <input id="hidden" type="hidden" name="_method" value="patch">
+  <label>Book Author:</label><input type="text" name="books[][author]">
+  <label>Book Genre:</label><input type="text" name="books[][genre]">
+  <input type="submit" name="Edit" value="Edit">
+
+</form>
+
+<form action="/books/<%=@book.slug%>/delete" method="post">
+  <input id="hidden" type="hidden" name="_method" value="delete">
+  <input type="submit" value="Delete">
+</form>

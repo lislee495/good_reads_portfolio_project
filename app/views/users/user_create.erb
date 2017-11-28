@@ -1,12 +1,9 @@
-<% if flash.has?(:message) %>
-  <%= flash[:message] %>
-<%end%>
 <h1>Add a book to My Books</h1>
 
 <form action="/my_books" method="post">
-  <label>Book Name:</label><input type="text" name="user[books][][name]" >
-  <label>Book Author:</label><input type="text" name="user[books][][author]">
-  <label>Book Genre:</label><input type="text" name="user[books][][genre]">
+  <label>Book Name:</label><input type="text" name="user[books][][name]" > <br>
+  <label>Book Author:</label><input type="text" name="user[books][][author]"> <br>
+  <label>Book Genre:</label><input type="text" name="user[books][][genre]"> <br>
   <input type="submit" name="submit" value="Submit">
 </form>
 <!-- enables creation of multiple books per user  -->
