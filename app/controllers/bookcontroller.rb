@@ -12,9 +12,10 @@ class BookController < ApplicationController
 
   post "/new_book" do
       author = Author.find_or_create_by(name: params["author"])
+      genre = Genre.find_or_create_by(name: params["genre"])
       book = Book.find_or_create_by(name: params["name"])
       book.author = author
-      book.user_id = current_user.id
+      book.genre = genre
       book.save
       redirect to "/books/#{book.id}/show"
     end
@@ -22,7 +23,6 @@ class BookController < ApplicationController
 
   get "/books/:id/show" do
     # can view but not edit a user profile
-
     @book = Book.find_by(id: params["id"])
     erb :"/books/books_index"
   end

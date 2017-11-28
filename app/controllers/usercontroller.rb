@@ -23,12 +23,13 @@ class UserController  < ApplicationController
   end
 
   post "/my_books" do
-
-      author = Author.find_or_create_by(name: params[:books][][:author])
-      book = Book.find_or_create_by(name: params[:books][:name], author: author.id)
-      book.save
-      current_user.books << book
-      redirect to "/users/#{current_user.slug}"
+    author = Author.find_or_create_by(name: params["author"])
+    genre = Genre.find_or_create_by(name: params["genre"])
+    book = Book.find_or_create_by(name: params["book name"])
+    book.author = author
+    book.user_id = current_user.id
+    book.save
+    redirect to "/users/#{current_user.slug}"
   end
 
   get "/users/:slug/edit" do
