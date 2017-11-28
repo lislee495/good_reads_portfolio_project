@@ -28,6 +28,7 @@ class UserController  < ApplicationController
     book = Book.find_or_create_by(name: params["book name"])
     book.author = author
     book.user_id = current_user.id
+    current_user.books << book
     book.save
     redirect to "/users/#{current_user.slug}"
   end
@@ -39,7 +40,7 @@ class UserController  < ApplicationController
 
   post "/:book_id/show" do
     @book = Book.find_by_id(params[:book_id])
-    redirect to "/books/#{@book.slug}"
+    redirect to "/books/#{@book.id}/show"
   end
 
   post "/:book_id/edit" do

@@ -2,25 +2,9 @@
 
 
 <h2>My Books:</h2>
-<table>
-  <tr>
-    <th>Book:</th>
-    <th>Author:</th>
-    <th>Genre:</th>
-    <th></th>
-  </tr>
-  <% @user.books.each do |book| %>
-  <tr>
-    <td><%=book.name%></td>
-    <td><%=book.author.name%></td>
-    <!-- <td><%=book.genre%></td> -->
-    <td><form action="/<%=book.id%>/show" method="post">
-      <input type="submit" name="Show" value="Show">
-    </form></td>
-    <!-- can put extra functionality in the table, show, edit, remove  -->
-  </tr>
-  <% end%>
-</table>
+<% @user.books.each do |u| %>
+<%= u.name %>
+<% end%>
 
 <form action="/users/<%=@user.slug%>/add" method="post">
   <input type="submit" value="Add to My Books">

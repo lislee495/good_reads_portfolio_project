@@ -13,42 +13,42 @@ class BookController < ApplicationController
   post "/new_book" do
       author = Author.find_or_create_by(name: params["author"])
       genre = Genre.find_or_create_by(name: params["genre"])
-      book = Book.find_or_create_by(name: params["name"])
-      book.author = author
-      book.genre = genre
-      book.save
-      redirect to "/books/#{book.id}/show"
-    end
+      @book = Book.find_or_create_by(name: params["name"])
+      @book.author = author
+      @book.genre = genre
+      @book.save
+      redirect to "/books/#{@book.id}/show"
   end
 
   get "/books/:id/show" do
     # can view but not edit a user profile
-    @book = Book.find_by(id: params["id"])
-    erb :"/books/books_index"
+    @book = Book.find_by_id(params["id"])
+    erb :"/books/books_show"
   end
+end
 
-  get "/books/:slug/edit" do
-    @book = Book.find_by_slug(params[:slug])
-    erb :"/books/books_edit"
-  end
-
-  post "/books/:slug/edit" do
-    @book = Book.find_by_slug(params[:slug])
-  end
-
-  patch "/books/:slug/edit" do
-    @book = Book.find_by_slug(params[:slug])
-    if params[:books] != ""
-      @book.update(author: params[:books][][:author], genre: params[:books][][:genre])
-      @book.save
-      redirect to "/books/#{@book.slug}"
-    else
-      redirect to "/books/#{@book.slug}/edit"
-    end
-
-    delete "/books/:slug/delete" do
-      @book = Book.find_by_slug(params[:slug])
-      @book.Delete
-      redirect to "/books/index"
-    end
-  end
+  #
+  # get "/books/:slug/edit" do
+  #   @book = Book.find_by_slug(params[:slug])
+  #   erb :"/books/books_edit"
+  # end
+  #
+  # post "/books/:slug/edit" do
+  #   @book = Book.find_by_slug(params[:slug])
+  # end
+  #
+  # patch "/books/:slug/edit" do
+  #   @book = Book.find_by_slug(params[:slug])
+  #   if params[:books] != ""
+  #     @book.update(author: params[:books][][:author], genre: params[:books][][:genre])
+  #     @book.save
+  #     redirect to "/books/#{@book.slug}"
+  #   else
+  #     redirect to "/books/#{@book.slug}/edit"
+  #   end
+  #
+  #   delete "/books/:slug/delete" do
+  #     @book = Book.find_by_slug(params[:slug])
+  #     @book.Delete
+  #     redirect to "/books/index"
+    # end
