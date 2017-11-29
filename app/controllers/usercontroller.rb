@@ -27,7 +27,8 @@ class UserController  < ApplicationController
     genre = Genre.find_or_create_by(name: params["genre"])
     book = Book.find_or_create_by(name: params["book name"])
     book.author = author
-    book.user_id = current_user.id
+    book.genre = genre
+    book.user_ids = current_user.id
     current_user.books << book
     book.save
     redirect to "/users/#{current_user.slug}"
@@ -50,8 +51,9 @@ class UserController  < ApplicationController
 
   post "/users/:slug/:book_id/delete" do
     @user = User.find_by_slug(params[:slug])
-    book = @user.books.find_by(id: params[:book_id])
-    book.delete
-    redirect to "/users/#{@user.slug}/my_books"
+    association = BooksUsers.find_by(book_id: params[:book_id], user_id: @user.id)
+    association.delete
+    # deletes the association but not the book
+    redirect to "/users/#{@user.slug}"
   end
 end

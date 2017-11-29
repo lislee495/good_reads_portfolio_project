@@ -1,11 +1,13 @@
 class BookController < ApplicationController
 
   get "/books/index" do
+    @user = current_user
     @books = Book.all
     erb :"books/book_index"
   end
 
   get "/books/new" do
+    @user = current_user
     # only current user can edit their own page
     erb :"books/books_create"
   end
@@ -22,6 +24,7 @@ class BookController < ApplicationController
 
   get "/books/:slug/show" do
     # can view but not edit a user profile
+    @user = current_user
     @book = Book.find_by_slug(params["slug"])
     erb :"/books/books_show"
   end
