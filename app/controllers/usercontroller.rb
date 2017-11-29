@@ -40,7 +40,7 @@ class UserController  < ApplicationController
 
   post "/:book_id/show" do
     @book = Book.find_by_id(params[:book_id])
-    redirect to "/books/#{@book.id}/show"
+    redirect to "/books/#{@book.slug}/show"
   end
 
   post "/:book_id/edit" do

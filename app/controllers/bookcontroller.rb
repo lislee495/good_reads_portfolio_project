@@ -13,7 +13,7 @@ class BookController < ApplicationController
   post "/new_book" do
       author = Author.find_or_create_by(name: params["author"])
       genre = Genre.find_or_create_by(name: params["genre"])
-      @book = Book.find_or_create_by(name: params["name"])
+      @book = Book.find_or_create_by(name: params["name"], author: author)
       @book.author = author
       @book.genre = genre
       @book.save

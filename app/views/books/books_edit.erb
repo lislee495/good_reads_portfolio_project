@@ -2,8 +2,8 @@
 
 <form action="/books/<%=@book.slug%>/edit" method="post">
   <input id="hidden" type="hidden" name="_method" value="patch">
-  <label>Book Author:</label><input type="text" name="books[][author]">
-  <label>Book Genre:</label><input type="text" name="books[][genre]">
+  <label>Book Author:</label><input type="text" name="author">
+  <label>Book Genre:</label><input type="text" name="genre">
   <input type="submit" name="Edit" value="Edit">
 
 </form>
