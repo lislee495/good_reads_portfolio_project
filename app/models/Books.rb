@@ -5,7 +5,7 @@ class Book < ActiveRecord::Base
   belongs_to :genre
 
   def slug
-    slug = self.name.downcase!
+    slug = self.name.downcase.split(" ").join("-")
     slug
   end
 

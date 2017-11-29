@@ -17,12 +17,12 @@ class BookController < ApplicationController
       @book.author = author
       @book.genre = genre
       @book.save
-      redirect to "/books/#{@book.id}/show"
+      redirect to "/books/#{@book.slug}/show"
   end
 
-  get "/books/:id/show" do
+  get "/books/:slug/show" do
     # can view but not edit a user profile
-    @book = Book.find_by_id(params["id"])
+    @book = Book.find_by_slug(params["slug"])
     erb :"/books/books_show"
   end
 end

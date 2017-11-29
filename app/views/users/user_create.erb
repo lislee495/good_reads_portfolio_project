@@ -11,28 +11,33 @@
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand" href="#">ReadGood</a>
+  <a class="navbar-brand" href="/users/<%=@user.slug%>">ReadGood</a>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only"></span></a>
+        <a class="nav-link" href="/users/<%=@user.slug%>">Home <span class="sr-only"></span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/users/<%=@user.slug%>/add">Add to My Books</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Logout</a>
+        <a class="nav-link" href="/logout">Logout</a>
       </li>
     </ul>
   </div>
 </nav>
-    <h1>Add a book to My Books</h1>
+<div class="text-center">
+  <h1>Add a book to My Books</h1>
 
-    <form action="/my_books" method="post">
-      <label>Book Name:</label><input type="text" name="book name" value="book name" required="required"> <br>
-      <label>Book Author:</label><input type="text" name="author" required="required"> <br>
-      <label>Book Genre:</label><input type="text" name="genre" required="required"> <br>
-      <input type="submit" name="submit" value="Submit">
-    </form>
+  <form action="/my_books" method="post">
+    <label>Book Name:</label><input type="text" name="book name" required="required"> <br>
+    <label>Book Author:</label><input type="text" name="author" required="required"> <br>
+    <label>Book Genre:</label><input type="text" name="genre" required="required"> <br>
+    <input type="submit" name="submit" value="Submit">
+  </form>
+</div>
+
   </body>
-  <div id="fixedfooter"><a href="/users/logout">Log Out</a></div>
   </body>
 </html>
