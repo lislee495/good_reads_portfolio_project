@@ -25,6 +25,15 @@
         <a class="nav-link" href="/users/<%=@user.slug%>/edit">Edit My Books</a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="/books/index">Books</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/authors">Authors</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/genres">Genres</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="/logout">Logout</a>
       </li>
     </ul>
@@ -50,7 +59,7 @@
     <td><%=book.id%></td>
     <td><%=book.name%></td>
     <td><%=book.author.name%></td>
-    <td><%=book.genre%></td> 
+    <td><%=book.genre%></td>
     <td><form action="/<%=book.id%>/show" method="post">
       <input type="submit" name="Show" value="Show">
     </form></td>
