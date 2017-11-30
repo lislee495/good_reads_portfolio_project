@@ -1,12 +1,14 @@
 require './config/environment'
+require 'sinatra/base'
+require 'rack-flash'
 class ApplicationController < Sinatra::Base
-
   configure do
     set :public_folder, 'public'
     set :views, 'app/views'
     enable :sessions
 		set :session_secret, "password_security"
   end
+  use Rack::Flash
 
   get "/" do
     erb :homepage
@@ -24,9 +26,17 @@ class ApplicationController < Sinatra::Base
     if params.values.any?{|v| v.nil? || v.length == 0}
       redirect to "/signup"
     else
-      user = User.create(username: params[:username], password: params[:password], email: params[:email])
-      session[:user_id] = user.id
-      redirect to "/login"
+      if User.find_by(username: params[:username])
+        flash[:message] = "Username already taken."
+        redirect to "/signup"
+      elsif User.find_by(email: params[:email])
+        flash[:message] = "Email already taken."
+        redirect to "/signup"
+      else
+        user = User.create(username: params[:username], password: params[:password], email: params[:email])
+        session[:user_id] = user.id
+        redirect to "/login"
+      end
     end
   end
 
@@ -44,6 +54,7 @@ class ApplicationController < Sinatra::Base
       session[:user_id] = user.id
       redirect to "/users/#{user.slug}"
     else
+      flash[:message] = "Incorrect login."
       redirect to "/login"
     end
   end

@@ -19,6 +19,11 @@
    </div>
 </div>
 <div class="text-center">
+  <% if flash.has?(:message) %>
+  <div class="alert alert-danger">
+    <strong>Sorry!</strong> <%= flash[:message] %>
+  </div>
+  <%end%>
   <h1>Login to ReadGood</h1>
 
   <form action="/login" method="post">

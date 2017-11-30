@@ -22,4 +22,5 @@ class OtherController < ApplicationController
     @genre = Genre.find_by_slug(params[:slug])
     erb :"genre/genre_show"
   end
+
 end
