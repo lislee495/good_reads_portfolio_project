@@ -29,7 +29,6 @@ class UserController  < ApplicationController
     book.author = author
     book.genre = genre
     book.user_ids = current_user.id
-    current_user.books << book
     book.save
     redirect to "/users/#{current_user.slug}"
   end
@@ -51,7 +50,7 @@ class UserController  < ApplicationController
 
   post "/users/:slug/:book_id/delete" do
     @user = User.find_by_slug(params[:slug])
-    association = BooksUsers.find_by(book_id: params[:book_id], user_id: @user.id)
+    association = BooksUser.find_by(book_id: params[:book_id], user_id: @user.id)
     association.delete
     # deletes the association but not the book
     redirect to "/users/#{@user.slug}"

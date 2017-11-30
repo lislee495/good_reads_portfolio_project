@@ -41,12 +41,29 @@
 </nav>
 <div class="text-center">
   <h1>All Books</h1>
-
-  <ul>
-    <% @books.each do |book| %>
-    <li><a href="/books/<%=book.slug%>/show"><%=book.name%></a></li>
-    <%end%>
-  </ul>
 </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+      <th>#</th>
+      <th>Book Name:</th>
+      <th>Book Author:</th>
+      <th>Genre:</th>
+      <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @books.each do |book| %>
+      <tr>
+        <td><%=book.id%></td>
+        <td><a href="/books/<%=book.slug%>/show"><%=book.name%></a></td>
+        <td><a href="/authors/<%=book.author.slug%>"><%=book.author.name%></td>
+        <td><a href="/genre/<%=book.genre.slug%>"><%=book.genre.name%></td>
+        <td><a href="/books/<%=book.slug%>/edit">Edit</a></td>
+      </tr>
+      <%end%>
+    </tbody>
+  </table>
   </body>
 </html>
