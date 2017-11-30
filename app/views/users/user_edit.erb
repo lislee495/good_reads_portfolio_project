@@ -63,13 +63,13 @@
     <td><%=book.author.name%></td>
     <td><%=book.genre.name%></td>
     <td><form action="/<%=book.id%>/show" method="post">
-      <input type="submit" name="Show" value="Show">
+      <input class="btn btn-primary" type="submit" name="Show" value="Show">
     </form></td>
     <td><form action="/<%=book.id%>/edit" method="post">
-      <input type="submit" name="Edit" value="Edit">
+      <input class="btn btn-primary" type="submit" name="Edit" value="Edit">
     </form></td>
     <td><form action="/users/<%=@user.slug%>/<%=book.id%>/delete" method="post">
-      <input type="submit" name="Delete" value="Delete">
+      <input class="btn btn-primary" type="submit" name="Delete" value="Delete">
     </form></td>
     <!-- can put extra functionality in the table, show, edit, remove  -->
   </tr>

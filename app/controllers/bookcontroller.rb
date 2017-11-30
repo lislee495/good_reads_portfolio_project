@@ -13,13 +13,13 @@ class BookController < ApplicationController
   end
 
   post "/new_book" do
-      author = Author.find_or_create_by(name: params["author"])
-      genre = Genre.find_or_create_by(name: params["genre"])
-      @book = Book.find_or_create_by(name: params["name"], author: author)
-      @book.author = author
-      @book.genre = genre
-      @book.save
-      redirect to "/books/#{@book.slug}/show"
+    author = Author.find_or_create_by(name: params["author"])
+    genre = Genre.find_or_create_by(name: params["genre"])
+    @book = Book.find_or_create_by(name: params["name"], author: author)
+    @book.author = author
+    @book.genre = genre
+    @book.save
+    redirect to "/books/#{@book.slug}/show"
   end
 
   get "/books/:slug/show" do
@@ -29,7 +29,15 @@ class BookController < ApplicationController
     erb :"/books/books_show"
   end
 
+  get "/books/:slug/add" do
+    @user = current_user
+    @book = Book.find_by_slug(params[:slug])
+    @user.books << @book
+    redirect to "/users/#{@user.slug}"
+  end
+
   get "/books/:slug/edit" do
+    @user = current_user
     @book = Book.find_by_slug(params[:slug])
     erb :"/books/books_edit"
   end
@@ -45,7 +53,9 @@ class BookController < ApplicationController
 
   delete "/books/:slug/delete" do
     @book = Book.find_by_slug(params[:slug])
-    @book.Delete
+    @book.author_id = nil
+    @book.genre_id = nil
+    @book.delete
     redirect to "/books/index"
   end
 end

@@ -34,8 +34,13 @@ class UserController  < ApplicationController
   end
 
   get "/users/:slug/edit" do
-    @user = User.find_by_slug(params[:slug])
-    erb :"/users/user_edit"
+    user = User.find_by_slug(params[:slug])
+    if logged_in? && (user == current_user)
+      @user = user
+      erb :"/users/user_edit"
+    else
+      redirect to "/login"
+    end
   end
 
   post "/:book_id/show" do
@@ -49,10 +54,14 @@ class UserController  < ApplicationController
   end
 
   post "/users/:slug/:book_id/delete" do
-    @user = User.find_by_slug(params[:slug])
-    association = BooksUser.find_by(book_id: params[:book_id], user_id: @user.id)
-    association.delete
-    # deletes the association but not the book
-    redirect to "/users/#{@user.slug}"
+    user = User.find_by_slug(params[:slug])
+    if logged_in? && (user == current_user)
+      association = BooksUser.find_by(book_id: params[:book_id], user_id: @user.id)
+      association.delete
+      # deletes association but not the book
+      redirect to "/users/#{@user.slug}"
+    else
+      redirect to "/login"
+    end
   end
 end
