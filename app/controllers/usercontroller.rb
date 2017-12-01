@@ -56,10 +56,10 @@ class UserController  < ApplicationController
   post "/users/:slug/:book_id/delete" do
     user = User.find_by_slug(params[:slug])
     if logged_in? && (user == current_user)
-      association = BooksUser.find_by(book_id: params[:book_id], user_id: @user.id)
+      association = BooksUser.find_by(book_id: params[:book_id], user_id: user.id)
       association.delete
       # deletes association but not the book
-      redirect to "/users/#{@user.slug}"
+      redirect to "/users/#{user.slug}"
     else
       redirect to "/login"
     end

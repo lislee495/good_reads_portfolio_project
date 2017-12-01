@@ -34,7 +34,7 @@ Just myself.
 
 ## License
 
-This project is licensed under Lisa Lee - or Flatiron School?
+This project is licensed under Flatiron School - (license.md)
 
 ## Acknowledgments
 

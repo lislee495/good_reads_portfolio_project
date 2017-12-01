@@ -52,7 +52,9 @@
       <input id="hidden" type="hidden" name="_method" value="delete">
       <input class="btn btn-primary mx-2" type="submit" name="Delete" value="Delete">
     </form>
-    <a class="btn btn-primary mx-2" href="/books/<%=@book.slug%>/add" role="button">Add to My Books</a>
+    <% if !@user.books.include?(@book) %>
+      <a class="btn btn-primary mx-2" href="/books/<%=@book.slug%>/add" role="button">Add to My Books</a>
+    <% end %>
   </div>
 
 </div>
