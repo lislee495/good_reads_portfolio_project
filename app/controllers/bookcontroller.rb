@@ -1,28 +1,40 @@
 class BookController < ApplicationController
 
-  get "/books/index" do
+  get "/books" do
+    authenticate_user!
     @user = current_user
     @books = Book.all
     erb :"books/book_index"
   end
 
   get "/books/new" do
-    @user = current_user
-    # only current user can edit their own page
+    authenticate_user!
     erb :"books/books_create"
   end
 
-  post "/new_book" do
+  post "/books" do
+    authenticate_user!
     author = Author.find_or_create_by(name: params["author"])
     genre = Genre.find_or_create_by(name: params["genre"])
-    @book = Book.find_or_create_by(name: params["name"], author: author)
-    @book.author = author
-    @book.genre = genre
-    @book.save
-    redirect to "/books/#{@book.slug}/show"
+    @book = Book.find_or_initialize_by(name: params["name"], author: author)
+    if @book.id
+      if !@book.users.include?(current_user)
+        @book.users << current_user
+        @book.save
+      end
+      redirect to "/books/#{@book.slug}/show"
+      # only update values if the current user is the owner_id
+    else
+      # finish adding book attributes and set an owner
+      @book.owner = current_user
+      @book.users << current_user
+      @book.genre = genre
+      @book.save
+      redirect to "/books/#{@book.slug}/show"
+    end
   end
 
-  get "/books/:slug/show" do
+  get "/books/:slug" do
     # can view but not edit a user profile
     @user = current_user
     @book = Book.find_by_slug(params["slug"])
@@ -42,16 +54,18 @@ class BookController < ApplicationController
     erb :"/books/books_edit"
   end
 
-  patch "/books/:slug/edit" do
+  patch "/books/:slug" do
     @book = Book.find_by_slug(params[:slug])
-    author = Author.find_or_create_by(name: params[:author])
-    genre = Genre.find_or_create_by(name: params[:genre])
-    @book.update(author: author, genre: genre)
-    @book.save
-    redirect to "/books/#{@book.slug}/show"
+    if @book && @book.owner == current_user
+      author = Author.find_or_create_by(name: params[:author])
+      genre = Genre.find_or_create_by(name: params[:genre])
+      @book.update(author: author, genre: genre)
+      redirect to "/books/#{@book.slug}/show"
+    end
+    redirect to "/books"
   end
 
-  delete "/books/:slug/delete" do
+  delete "/books/:slug" do
     @book = Book.find_by_slug(params[:slug])
     @book.author_id = nil
     @book.genre_id = nil

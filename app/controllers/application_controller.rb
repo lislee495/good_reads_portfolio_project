@@ -78,4 +78,12 @@ class ApplicationController < Sinatra::Base
 		end
   end
 
+  private
+
+  def authenticate_user!
+    if !logged_in?
+      redirect to '/login'
+    end
+  end
+
 end

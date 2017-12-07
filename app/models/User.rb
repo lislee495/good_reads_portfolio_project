@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_many :books, through: :books_users
   has_many :authors, through: :books_users
   has_many :genres, through: :books_users
+  has_many :owned_books, class_name: "Book", foreign_key: "owner_id"
   has_secure_password
 
   def slug
