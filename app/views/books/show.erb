@@ -1,0 +1,21 @@
+<% if flash.has?(:message) %>
+<div class="alert alert-danger">
+  <strong>Sorry!</strong> <%= flash[:message] %>
+</div>
+
+  <h1><%=@book.name%></h1>
+
+  <h3><%=@book.author.name%></h3>
+  <br>
+  <div class="btn-group">
+    <% if @book.owner == @user %>
+    <a class="btn btn-primary mx-2" href="/books/<%=@book.slug%>/edit" role="button">Edit</a>
+    <form action="/books/<%=@book.slug%>" method="delete">
+      <input id="hidden" type="hidden" name="_method" value="delete">
+      <input class="btn btn-primary mx-2" type="submit" name="Delete" value="Delete">
+    </form>
+    <%end%>
+    <% if !@user.books.include?(@book) %>
+      <a class="btn btn-primary mx-2" href="/books/<%=@book.slug%>/add" role="button">Add to My Books</a>
+    <% end %>
+  </div>

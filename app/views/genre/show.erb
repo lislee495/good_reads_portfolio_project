@@ -1,0 +1,11 @@
+<% if flash.has?(:message) %>
+<div class="alert alert-danger">
+  <strong>Sorry!</strong> <%= flash[:message] %>
+</div>
+
+  <h1><%=@genre.name%></h1>
+  <div>
+    <% @genre.books.each do |book| %>
+    <li><a href="/books/<%=book.slug%>"><%= book.name %></a></li>
+    <% end %>
+  </div>

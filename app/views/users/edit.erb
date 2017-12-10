@@ -1,0 +1,41 @@
+<% if flash.has?(:message) %>
+<div class="alert alert-danger">
+  <strong>Sorry!</strong> <%= flash[:message] %>
+</div>
+
+  <h1>Edit My Books</h1>
+  <h2>My Books:</h2>
+</div>
+<table class="table">
+  <thead>
+  <tr>
+    <th>#</th>
+    <th>Book:</th>
+    <th>Author:</th>
+    <th>Genre:</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+</thead>
+<tbody>
+  <% @user.books.each do |book| %>
+  <tr>
+    <td><%=book.id%></td>
+    <td><%=book.name%></td>
+    <td><%=book.author.name%></td>
+    <td><%=book.genre.name%></td>
+    <td><form action="/<%=book.id%>/show" method="post">
+      <input class="btn btn-primary" type="submit" name="Show" value="Show">
+    </form></td>
+    <td><form action="/<%=book.id%>/edit" method="post">
+      <input class="btn btn-primary" type="submit" name="Edit" value="Edit">
+    </form></td>
+    <td><form action="/users/<%=@user.slug%>/<%=book.id%>/delete" method="post">
+      <input class="btn btn-primary" type="submit" name="Delete" value="Delete">
+    </form></td>
+    <!-- can put extra functionality in the table, show, edit, remove  -->
+  </tr>
+  <% end%>
+</tbody>
+</table>

@@ -1,0 +1,17 @@
+<% if flash.has?(:message) %>
+<div class="alert alert-danger">
+  <strong>Sorry!</strong> <%= flash[:message] %>
+</div>
+
+  <br>
+  <h1>Add a book to My Books</h1>
+<br>
+  <form action="/add_book" method="post">
+    <label>Book Name:</label><input type="text" name="book name" required="required"> <br>
+    <br>
+    <label>Book Author:</label><input type="text" name="author" required="required"> <br>
+    <br>
+    <label>Book Genre:</label><input type="text" name="genre" required="required"> <br>
+    <br>
+    <input class="btn btn-primary" type="submit" name="submit" value="Submit">
+  </form>

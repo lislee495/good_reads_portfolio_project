@@ -1,0 +1,30 @@
+
+
+  <h1><%=@user.username%></h1>
+  <h2>My Books:</h2>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th>#</th>
+    <th>Book:</th>
+    <th>Author:</th>
+    <th>Genre:</th>
+    <th></th>
+  </tr>
+</thead>
+<tbody>
+  <% @user.books.each do |book| %>
+  <tr>
+    <td><%=book.id%></td>
+    <td><%=book.name%></td>
+    <td><%=book.author.name%></td>
+    <td><%=book.genre.name%></td>
+    <td><form action="/<%=book.id%>/show" method="post">
+      <input class="btn btn-primary" type="submit" name="Show" value="Show">
+    </form></td>
+    <!-- can put extra functionality in the table, show, edit, remove  -->
+  </tr>
+  <% end%>
+</tbody>
+</table>
