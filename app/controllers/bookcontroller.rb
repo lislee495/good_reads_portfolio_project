@@ -41,7 +41,7 @@ class BookController < ApplicationController
     if @book
       erb :"/books/show"
     else
-      flash[:message] = "Book not found"
+      flash.now[:message] = "Book not found"
       redirect to "/books"
     end
   end
@@ -60,7 +60,7 @@ class BookController < ApplicationController
       erb :'books/edit'
     else
       if !@book
-        flash[:message] = "Book not found."
+        flash.now[:message] = "Book not found."
         redirect to "/books"
       else
         flash[:message] = "Action not permitted."

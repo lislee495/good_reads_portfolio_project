@@ -42,7 +42,7 @@
 <div class="main text-center">
   <% if flash.has?(:message) %>
   <div class="alert alert-danger">
-    <strong>Sorry!</strong> <%= flash[:message] %>
+    <strong>Sorry!</strong> <%= flash.now[:message] %>
   </div>
   <% end %>
   <%= yield %>

@@ -14,7 +14,7 @@ class OtherController < ApplicationController
     if @author
       erb :"author/show"
     else
-      flash[:message] = "Author not found"
+      flash.now[:message] = "Author not found"
       redirect to "/authors"
     end
   end
@@ -29,7 +29,7 @@ class OtherController < ApplicationController
     if @genre
       erb :"genres/show"
     else
-      flash[:message] = "Genre not found"
+      flash.now[:message] = "Genre not found"
       redirect to "/genre"
     end
   end

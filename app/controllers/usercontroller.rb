@@ -9,7 +9,7 @@ class UserController  < ApplicationController
     if @user
       erb :"/users/show"
     else
-      flash[:message] = "User not found"
+      flash.now[:message] = "User not found"
       redirect to "/users/#{current_user.slug}"
     end
   end
@@ -26,7 +26,7 @@ class UserController  < ApplicationController
       @user = user
       erb :"/users/new"
     else
-      flash[:message] = "Page not found."
+      flash.now[:message] = "Action not permitted"
       redirect to "/users/#{current_user.slug}"
     end
   end
@@ -57,7 +57,7 @@ class UserController  < ApplicationController
       @user = user
       erb :"/users/edit"
     else
-      flash[:message] = "Page not found."
+      flash.now[:message] = "Action not permitted."
       redirect to "/users/#{current_user.slug}"
     end
   end
@@ -80,7 +80,7 @@ class UserController  < ApplicationController
       # deletes association but not the book
       redirect to "/users/#{user.slug}"
     else
-      flash[:message] = "Page not found."
+      flash.now[:message] = "Action not permitted."
       redirect to "/users/#{current_user.slug}"
     end
   end
