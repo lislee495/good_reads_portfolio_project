@@ -63,7 +63,7 @@ class BookController < ApplicationController
         flash.now[:message] = "Book not found."
         redirect to "/books"
       else
-        flash[:message] = "Action not permitted."
+        flash.now[:message] = "Action not permitted."
         redirect to "/books"
       end
     end
