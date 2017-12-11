@@ -28,8 +28,8 @@ class BookController < ApplicationController
       # finish adding book attributes and set an owner
       @book.owner = current_user
       @book.users << current_user
-      @book.genre = Genre.find_or_create_by(params["genre"])
-      @book.author = Author.find_or_create_by(params["author"])
+      @book.genre = Genre.find_or_create_by(name: params["genre"])
+      @book.author = Author.find_or_create_by(name: params["author"])
       @book.save
       redirect to "/books/#{@book.slug}"
     end
@@ -56,11 +56,16 @@ class BookController < ApplicationController
 #edit a book
   get "/books/:slug/edit" do
     @book = Book.find_by_slug(params[:slug])
-    if @book
-      erb :"/books/edit"
+    if @book && @book.owner == current_user
+      erb :'books/edit'
     else
-      flash[:message] = "Book not found"
-      redirect to "/books"
+      if !@book
+        flash[:message] = "Book not found."
+        redirect to "/books"
+      else
+        flash[:message] = "Action not permitted."
+        redirect to "/books"
+      end
     end
   end
 
@@ -78,8 +83,14 @@ class BookController < ApplicationController
   delete "/books/:slug" do
     @book = Book.find_by_slug(params[:slug])
     if @book && @book.owner == current_user
-      @book.author_id = nil
-      @book.genre_id = nil
+      if @book.author.books.length == 1
+        @book.author.delete
+      elsif @book.genre.books.length == 1
+        @book.genre.delete
+      else
+        @book.author_id = nil
+        @book.genre_id = nil
+      end
       @book.delete
       redirect to "/books/index"
     else
