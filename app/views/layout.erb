@@ -40,9 +40,11 @@
   </div>
 </nav>
 <div class="main text-center">
+
+
   <% if flash.has?(:message) %>
   <div class="alert alert-danger">
-    <strong>Sorry!</strong> <%= flash[:message] %>
+   <%= flash[:message] %>
   </div>
   <% end %>
   <%= yield %>

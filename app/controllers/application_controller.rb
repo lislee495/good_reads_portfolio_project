@@ -64,24 +64,15 @@ class ApplicationController < Sinatra::Base
     end
   end
 
-  private
-
-  def authenticate_user!
-    if !logged_in?
-      redirect to '/login'
-    end
-  end
-
-  def set_user
-    @user = current_user
-  end
+private
 
   def logged_in?
     !!session[:user_id]
   end
 
   def current_user
-    User.find(session[:user_id])
+    if logged_in?
+      User.find(session[:user_id])
+    end
   end
-
 end

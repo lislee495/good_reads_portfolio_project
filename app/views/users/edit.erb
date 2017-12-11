@@ -25,13 +25,14 @@
     <td><form action="/<%=book.id%>/show" method="post">
       <input class="btn btn-primary" type="submit" name="Show" value="Show">
     </form></td>
-    <td><form action="/<%=book.id%>/edit" method="post">
-      <input class="btn btn-primary" type="submit" name="Edit" value="Edit">
-    </form></td>
     <td><form action="/users/<%=@user.slug%>/<%=book.id%>/delete" method="post">
       <input class="btn btn-primary" type="submit" name="Delete" value="Delete from Library">
     </form></td>
-    <!-- can put extra functionality in the table, show, edit, remove  -->
+    <% if book.owner == current_user %>
+    <td><form action="/<%=book.id%>/edit" method="post">
+      <input class="btn btn-primary" type="submit" name="Edit" value="Edit">
+    </form></td>
+    <% end %>
   </tr>
   <% end%>
 </tbody>

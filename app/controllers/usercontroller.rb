@@ -1,37 +1,38 @@
 class UserController  < ApplicationController
-
-  before do
-    authenticate_user!
-  end
+  use Rack::Flash
 
   get "/users/:slug" do
+    authenticate_user!
     @user = User.find_by_slug(params[:slug])
     if @user
       erb :"/users/show"
     else
-      flash.now[:message] = "User not found"
+      flash[:message] = "User not found"
       redirect to "/users/#{current_user.slug}"
     end
   end
 
   post "/users/:slug" do
+    authenticate_user!
     user = User.find_by_slug(params[:slug])
     redirect to "/users/#{user.slug}"
   end
 
   get "/users/:slug/add" do
+    authenticate_user!
     # only current user can add to their library
     user = User.find_by_slug(params[:slug])
     if logged_in? && (user == current_user) && user
       @user = user
       erb :"/users/new"
     else
-      flash.now[:message] = "Action not permitted"
+      flash[:message] = "Action not permitted"
       redirect to "/users/#{current_user.slug}"
     end
   end
 
   post "/add_book" do
+    authenticate_user!
     @book = Book.find_or_initialize_by(name: params["name"])
     if @book.id
       if !@book.users.include?(current_user)
@@ -52,27 +53,31 @@ class UserController  < ApplicationController
   end
 
   get "/users/:slug/edit" do
+    authenticate_user!
     user = User.find_by_slug(params[:slug])
     if logged_in? && (user == current_user) && user
       @user = user
       erb :"/users/edit"
     else
-      flash.now[:message] = "Action not permitted."
+      flash[:message] = "Action not permitted."
       redirect to "/users/#{current_user.slug}"
     end
   end
 
   post "/:book_id/show" do
+    authenticate_user!
     @book = Book.find_by_id(params[:book_id])
     redirect to "/books/#{@book.slug}"
   end
 
   post "/:book_id/edit" do
+    authenticate_user!
     @book = Book.find_by_id(params[:book_id])
     redirect to "/books/#{@book.slug}/edit"
   end
 
   post "/users/:slug/:book_id/delete" do
+    authenticate_user!
     user = User.find_by_slug(params[:slug])
     if logged_in? && (user == current_user) && user
       association = BooksUser.find_by(book_id: params[:book_id], user_id: user.id)
@@ -80,8 +85,17 @@ class UserController  < ApplicationController
       # deletes association but not the book
       redirect to "/users/#{user.slug}"
     else
-      flash.now[:message] = "Action not permitted."
+      flash[:message] = "Action not permitted."
       redirect to "/users/#{current_user.slug}"
     end
   end
+
+  private
+  def authenticate_user!
+    if !logged_in?
+      flash[:message] = "Please sign up or login first."
+      redirect to "/"
+    end
+  end
+
 end
