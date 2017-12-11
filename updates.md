@@ -1,0 +1,5 @@
+-If the user is the creator and owner of a book, only they have the permission to update or delete a book. 
+-Only the owner of a book can see and access the edit/delete buttons on the page.
+-Buttons for deleting have been updated to be clearer, i.e. "Delete from Library" versus "Delete for Good"
+-If a book is deleted, if the author or genre only has one book (that book), they will be deleted. This protects authors or genres of many books from being deleted, but prevents there being many authors/genres with 0 books. 
+-All pages require user login, or they will be redirected to the homepage. 
