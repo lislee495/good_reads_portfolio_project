@@ -11,15 +11,11 @@ class ApplicationController < Sinatra::Base
   use Rack::Flash
 
   get "/" do
-    erb :homepage
-  end
-
-  get "/failure" do
-    erb :failure
+    erb :homepage, :layout => false
   end
 
   get "/signup" do
-    erb :sign_up
+    erb :signup, :layout => false
   end
 
   post "/signup" do
@@ -44,7 +40,7 @@ class ApplicationController < Sinatra::Base
     if logged_in?
       redirect to "/users/#{current_user.slug}"
     else
-      erb :log_in
+      erb :login, :layout => false
     end
   end
 
@@ -68,14 +64,15 @@ class ApplicationController < Sinatra::Base
     end
   end
 
-  helpers do
-    def logged_in?
-			!!session[:user_id]
-    end
+private
 
-		def current_user
-			User.find(session[:user_id])
-		end
+  def logged_in?
+    !!session[:user_id]
   end
 
+  def current_user
+    if logged_in?
+      User.find(session[:user_id])
+    end
+  end
 end

@@ -1,26 +1,47 @@
 class OtherController < ApplicationController
+  use Rack::Flash
   get "/authors" do
-    @user = current_user
+    set_user
     @authors = Author.all
-    erb :"author/author_index"
+    erb :"author/index"
   end
 
   get "/authors/:slug" do
-    @user = current_user
+    set_user
     @author = Author.find_by_slug(params[:slug])
-    erb :"author/author_show"
+    if @author
+      erb :"author/show"
+    else
+      flash[:message] = "Author not found"
+      redirect to "/authors"
+    end
   end
 
   get "/genres" do
-    @user = current_user
+    set_user
     @genres = Genre.all
-    erb :"genre/genre_index"
+    erb :"genres/index"
   end
 
   get "/genres/:slug" do
-    @user = current_user
+    set_user
     @genre = Genre.find_by_slug(params[:slug])
-    erb :"genre/genre_show"
+    if @genre
+      erb :"genres/show"
+    else
+      flash[:message] = "Genre not found"
+      redirect to "/genre"
+    end
+  end
+
+  private
+  def set_user
+    if logged_in?
+      @user = current_user
+    else
+      flash[:message] = "Please sign up or login first."
+      redirect to "/"
+    end
   end
 
 end
